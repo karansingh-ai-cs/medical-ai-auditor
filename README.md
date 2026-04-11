@@ -163,7 +163,7 @@ print(hybrid.explain(question, response))
 
 ---
 
-## Expected Results
+## Expected Results (NOT REAL IT'S EXPECTED)
 
 | System | Accuracy | Macro-F1 |
 |--------|----------|----------|
@@ -180,11 +180,11 @@ print(hybrid.explain(question, response))
 If you use this project in academic work:
 
 ```
-@misc{medical_ai_auditor_2024,
+@misc{medical_ai_auditor_,
   title  = {Medical AI Reliability Auditor: Detecting Missing Critical Reasoning
             in AI-Generated Medical Responses},
-  author = {[Your Name]},
-  year   = {2024},
+  author = {[KARAN SINGH]},
+  year   = {2026},
 }
 ```
 
