@@ -1,0 +1,76 @@
+# config.yaml
+# ─────────────────────────────────────────────────────────────────
+# Central configuration for Medical AI Reliability Auditor.
+# All scripts read from here — change once, applies everywhere.
+# ─────────────────────────────────────────────────────────────────
+
+# ── Paths ──────────────────────────────────────────────────────────
+paths:
+  raw_questions:    "data/raw_questions.csv"
+  raw_dataset:      "data/raw_dataset.csv"
+  labeled_dataset:  "data/labeled_dataset.csv"
+  train_split:      "data/train_split.csv"
+  val_split:        "data/val_split.csv"
+  test_split:       "data/test_split.csv"
+  experiments_dir:  "experiments"
+  evaluation_dir:   "evaluation"
+
+# ── Data ───────────────────────────────────────────────────────────
+data:
+  max_samples:      5000      # total Q&A pairs to use
+  train_ratio:      0.80
+  val_ratio:        0.10
+  test_ratio:       0.10
+  random_seed:      42
+
+  # Response generation prompt distribution
+  prompt_weights:
+    thorough:       0.40
+    brief:          0.35
+    dismissive:     0.15
+    overconfident:  0.10
+
+# ── Model ──────────────────────────────────────────────────────────
+model:
+  name:             "bert-base-uncased"    # or "dmis-lab/biobert-base-cased-v1.2"
+  tag:              "bert"                 # used for checkpoint filenames
+  num_labels:       5
+  max_len:          512
+  dropout:          0.3
+  freeze_layers:    0                      # set > 0 for small datasets
+
+# ── Training ───────────────────────────────────────────────────────
+training:
+  epochs:           4
+  batch_size:       16
+  learning_rate:    2.0e-5
+  weight_decay:     0.01
+  warmup_ratio:     0.10
+  max_grad_norm:    1.0
+  use_class_weights: true
+  use_sampler:      false
+  patience:         2           # early stopping patience (epochs)
+
+# ── Labels ─────────────────────────────────────────────────────────
+labels:
+  names:
+    - "no_issue"
+    - "incomplete_reasoning"
+    - "missing_causal_link"
+    - "dangerous_omission"
+    - "critical_failure"
+  # Labels where rule-based detector overrides ML
+  rule_override_labels:
+    - "critical_failure"
+    - "dangerous_omission"
+
+# ── Evaluation ─────────────────────────────────────────────────────
+evaluation:
+  test_size:        500
+  plot_dpi:         150
+
+# ── Logging ────────────────────────────────────────────────────────
+logging:
+  level:            "INFO"
+  format:           "%(asctime)s %(levelname)s  %(message)s"
+  datefmt:          "%H:%M:%S"
